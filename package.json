@@ -1,0 +1,35 @@
+{
+	"name": "cf-worker-test",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"dev": "wrangler dev --env development --remote",
+		"deploy:development": "npm run migrate:development && wrangler deploy --env development",
+		"deploy": "npm run migrate && wrangler deploy",
+		"lint": "eslint .",
+		"migrate": "wrangler d1 migrations apply DB --remote",
+		"migrate:development": "wrangler d1 migrations apply DB --remote --env development",
+		"sync-commands": "node scripts/register-commands.js"
+	},
+	"cloudflare": {
+		"bindings": {
+			"DISCORD_PUBLIC_KEY": {
+				"description": "Discord application public key, from the Developer Portal's General Information page. Required to verify interaction requests."
+			},
+			"DISCORD_APPLICATION_ID": {
+				"description": "Discord application ID, from the Developer Portal's General Information page."
+			},
+			"DISCORD_BOT_TOKEN": {
+				"description": "Bot token from the Discord Developer Portal's Bot page. Required for Discord API requests. Keep this secret."
+			}
+		}
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.39.0",
+		"eslint": "^9.39.0",
+		"wrangler": "^4.45.0"
+	},
+	"dependencies": {
+		"discord-interactions": "^4.4.0"
+	}
+}
